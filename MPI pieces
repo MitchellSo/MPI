@@ -1,0 +1,137 @@
+
+%need module directory can use odoo server% 
+$ ~/odoo-dev/odoo/odoo-bin scaffold --help
+
+%creating a new module and an empty __init__.py file and in it  ~/odoo-dev/custom-addons/todo_app/__init__.py.%
+$ mkdir ~/odoo-dev/custom-addons/todo_app
+$ touch ~/odoo-dev/custom-addons/todo_app/__init__.py
+
+%descriptor file%
+{
+    'name': 'To-Do Application',
+    'description': 'Manage your personal To-Do tasks.',
+    'author': 'Daniel Reis',
+    'depends': ['base'],
+    'application': True,
+}
+
+%Add to the add-ons path to make available to odoo%
+$ cd ~/odoo-dev
+$ ./odoo/odoo-bin -d todo --addons-path="custom-addons,odoo/addons" --savee
+
+%extra add-ons%
+--addons-path="custom-addons,extra,odoo/addons"
+%now the new module can be installed%
+
+%need a data model%
+%creating a todo_model.py file in the main directory of the todo_app module%
+# -*- coding: utf-8 -*-
+from odoo import models, fields
+class TodoTask(models.Model):
+    _name = 'todo.task'
+    _description = 'To-do Task'
+
+    name = fields.Char('Description', required=True)
+    is_done = fields.Boolean('Done?')
+    active = fields.Boolean('Active?', default=True)
+    
+%telling Python to load the file with the module in the __init__.py file%
+from . import todo_model
+
+
+%The view layer, adding menu items,XML ID, is very important: it is used to uniquely identify each data element inside the module, and can be used by other elements to reference it.%
+'data': ['views/todo_menu.xml'],
+
+%can add action buttons for simplicity, next Adding business logic%
+%import statement for the top of the ifle%
+from odoo import models, fields, api
+
+%in ToDo task list add the following%
+@api.multi
+def do_toggle_done(self):
+    for task in self:
+        task.is_done = not task.is_done
+    return True
+%The code loops through all the to-do task records, and for each one, modifies the is_done field, inverting its value.%
+
+%clearAll done button%
+@api.model
+def do_clear_done(self):
+    dones = self.search([('is_done', '=', True)])
+    dones.write({'active': False})
+    return True
+
+%for security add to CSV file named security/ir.model.access.csv%
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acess_todo_task_group_user,todo.task.user,model_todo_task,base.group_user,1,1,1,1 
+
+'data': [
+    'security/ir.model.access.csv',
+    'views/todo_view.xml',
+    'views/todo_menu.xml',
+],
+    
+%The following is code for features that were found in XML section of developer mode%
+%search function for MPIs%
+<search string="MPIs"><field name="x_name" modifiers="{}"/></search>
+
+%list form once MPI selection made beginning at <form> to <form> is default view from x_mpis% 
+%the entire thing is default view for x_mpis customization via Odoo Studio%
+
+<data>
+  <xpath expr="//group[@name='studio_group_54d8f7_left']" position="inside">
+    <field name="x_studio_field_2zMVk"/>
+  </xpath>
+  <xpath expr="//group[@name='studio_group_54d8f7_right']" position="inside">
+    <field name="x_studio_field_4nVLg" string="Important"/>
+  </xpath>
+  <xpath expr="//group[@name='studio_group_54d8f7']" position="after">
+    <notebook name="studio_notebook_VN6o0">
+      <page name="studio_page_VN6o0" string="New Page">
+        <field name="x_studio_field_bTZro">
+          <tree string="MPI Lines">
+            <field name="x_studio_field_pPyIx" string="Sort"/>
+            <field name="x_step_title"/>
+            <field name="x_step_description"/>
+            <field name="x_studio_field_aeBZ1" widget="image"/>
+          </tree>
+          <form>
+            <sheet string="MPI Lines">
+              <div class="oe_title">
+                <h1>
+                  <field name="x_name" required="1" modifiers="{&quot;required&quot;: true}"/>
+                </h1>
+              </div>
+              <group name="studio_group_202c82">
+                <group name="studio_group_202c82_left">
+                  <field name="x_studio_field_pPyIx"/>
+                  <field name="x_step_title"/>
+                </group>
+                <group name="studio_group_202c82_right">
+                  <field name="x_step_description"/>
+                </group>
+              </group>
+              <field name="x_studio_field_aeBZ1" widget="image"/>
+            </sheet>
+          </form>
+        </field>
+      </page>
+    </notebook>
+  </xpath>
+</data>
+%listing of MPIs default tree view %
+<tree string="MPIs"><field name="x_name" modifiers="{}"/></tree>
+%the list tree view from x_mpis customization via Odoo studio%
+<data>
+  <xpath expr="//field[@name='x_name']" position="attributes">
+    <attribute name="attrs">{}</attribute>
+  </xpath>
+</data>
+
+%pivoting MPIs%
+<pivot string="MPIs"/>
+
+%kanban view%
+<kanban string="MPIs"><templates><t t-name="kanban-box"><div t-attf-class="oe_kanban_card oe_kanban_global_click"><div class="o_kanban_card_content"><field name="x_name" modifiers="{}"/></div></div></t></templates></kanban>
+
+
