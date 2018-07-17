@@ -54,7 +54,7 @@ def do_toggle_done(self):
     return True
 %The code loops through all the to-do task records, and for each one, modifies the is_done field, inverting its value.%
 
-%clearAll done button%
+%clearAll done button this button seems unecesary for the MPI builder%
 @api.model
 def do_clear_done(self):
     dones = self.search([('is_done', '=', True)])
@@ -67,8 +67,8 @@ acess_todo_task_group_user,todo.task.user,model_todo_task,base.group_user,1,1,1,
 
 'data': [
     'security/ir.model.access.csv',
-    'views/mpi_view.xml',
-    'views/mpi_menu.xml',
+    'views/todo_view.xml',
+    'views/todo_menu.xml',
 ],
 ------------------------------------------------------------------------------------------------------------------------    
 %The following is code for features that were found in XML section of developer mode%
