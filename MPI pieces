@@ -2,9 +2,9 @@
 %need module directory can use odoo server% 
 $ ~/odoo-dev/odoo/odoo-bin scaffold --help
 
-%creating a new module and an empty __init__.py file and in it  ~/odoo-dev/custom-addons/mpi_builder/__init__.py.%
-$ mkdir ~/odoo-dev/custom-addons/mpi_builder
-$ touch ~/odoo-dev/custom-addons/mpi_builder/__init__.py
+%creating a new module and an empty __init__.py file and in it  ~/odoo-dev/custom-addons/mpi_app/__init__.py.%
+$ mkdir ~/odoo-dev/custom-addons/mpi_app
+$ touch ~/odoo-dev/custom-addons/mpi_app/__init__.py
 
 %descriptor file%
 {
@@ -17,14 +17,14 @@ $ touch ~/odoo-dev/custom-addons/mpi_builder/__init__.py
 
 %Add to the add-ons path to make available to odoo%
 $ cd ~/odoo-dev
-$ ./odoo/odoo-bin -d todo --addons-path="custom-addons,odoo/addons" --savee
+$ ./odoo/odoo-bin -d mpi --addons-path="custom-addons,odoo/addons" --savee
 
 %extra add-ons%
 --addons-path="custom-addons,extra,odoo/addons"
 %now the new module can be installed%
 
 %need a data model%
-%creating a todo_model.py file in the main directory of the mpi_builder module%
+%creating a todo_model.py file in the main directory of the mpi_app module%
 # -*- coding: utf-8 -*-
 from odoo import models, fields
 class TodoTask(models.Model):
@@ -67,10 +67,10 @@ acess_todo_task_group_user,todo.task.user,model_todo_task,base.group_user,1,1,1,
 
 'data': [
     'security/ir.model.access.csv',
-    'views/todo_view.xml',
-    'views/todo_menu.xml',
+    'views/mpi_view.xml',
+    'views/mpi_menu.xml',
 ],
-    
+------------------------------------------------------------------------------------------------------------------------    
 %The following is code for features that were found in XML section of developer mode%
 %search function for MPIs%
 <search string="MPIs"><field name="x_name" modifiers="{}"/></search>
