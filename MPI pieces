@@ -46,6 +46,8 @@ from . import todo_model
 %import statement for the top of the ifle%
 from odoo import models, fields, api
 
+  
+
 %in ToDo task list add the following%
 @api.multi
 def do_toggle_done(self):
