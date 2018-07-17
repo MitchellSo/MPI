@@ -8,8 +8,8 @@ $ touch ~/odoo-dev/custom-addons/todo_app/__init__.py
 
 %descriptor file%
 {
-    'name': 'To-Do Application',
-    'description': 'Manage your personal To-Do tasks.',
+    'name': 'MPI',
+    'description': 'Manage MPIs',
     'author': 'AuST',
     'depends': ['base'],
     'application': True,
