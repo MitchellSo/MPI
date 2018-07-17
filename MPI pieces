@@ -2,9 +2,9 @@
 %need module directory can use odoo server% 
 $ ~/odoo-dev/odoo/odoo-bin scaffold --help
 
-%creating a new module and an empty __init__.py file and in it  ~/odoo-dev/custom-addons/todo_app/__init__.py.%
-$ mkdir ~/odoo-dev/custom-addons/todo_app
-$ touch ~/odoo-dev/custom-addons/todo_app/__init__.py
+%creating a new module and an empty __init__.py file and in it  ~/odoo-dev/custom-addons/mpi_builder/__init__.py.%
+$ mkdir ~/odoo-dev/custom-addons/mpi_builder
+$ touch ~/odoo-dev/custom-addons/mpi_builder/__init__.py
 
 %descriptor file%
 {
