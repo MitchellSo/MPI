@@ -24,7 +24,7 @@ $ ./odoo/odoo-bin -d todo --addons-path="custom-addons,odoo/addons" --savee
 %now the new module can be installed%
 
 %need a data model%
-%creating a todo_model.py file in the main directory of the todo_app module%
+%creating a todo_model.py file in the main directory of the mpi_builder module%
 # -*- coding: utf-8 -*-
 from odoo import models, fields
 class TodoTask(models.Model):
