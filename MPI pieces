@@ -136,4 +136,102 @@ acess_todo_task_group_user,todo.task.user,model_todo_task,base.group_user,1,1,1,
 %kanban view%
 <kanban string="MPIs"><templates><t t-name="kanban-box"><div t-attf-class="oe_kanban_card oe_kanban_global_click"><div class="o_kanban_card_content"><field name="x_name" modifiers="{}"/></div></div></t></templates></kanban>
 
+%Kanban example from the PLM XML%
+<kanban class="oe_background_grey o_kanban_dashboard o_mrp_plm_kanban" create="0">
+                <field name="name"/>
+                <field name="alias_id"/>
+                <field name="alias_name"/>
+                <field name="alias_domain"/>
+                <field name="nb_validation"/>
+                <field name="nb_approvals"/>
+                <field name="nb_approvals_my"/>
+                <field name="nb_ecos"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary"><field name="name"/></div>
+                                    <div t-if="record.alias_name.value and record.alias_domain.value">
+                                        <small><i class="fa fa-envelope-o"/>&amp;nbsp; <field name="alias_id"/></small>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_manage_button_section">
+                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v"/></a>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-xs-6 o_kanban_primary_left">
+                                        <button class="btn btn-primary" name="773" type="action">
+                                            <span><t t-esc="record.nb_ecos.value"/> Engineering Changes</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 o_kanban_primary_right">
+                                        <div t-if="record.nb_approvals_my.raw_value &gt; 0" class="row">
+                                            <div class="col-xs-9">
+                                                <a class="oe_kanban_stock_picking_type_list" name="774" type="action">
+                                                    My Validations
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <field name="nb_approvals_my"/>
+                                            </div>
+                                        </div>
 
+                                        <div t-if="record.nb_approvals.raw_value &gt; 0" class="row">
+                                            <div class="col-xs-9">
+                                                <a class="oe_kanban_stock_picking_type_list" name="775" type="action">
+                                                    All Validations
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <field name="nb_approvals"/>
+                                            </div>
+                                        </div>
+                                        <div t-if="record.nb_validation.raw_value &gt; 0" class="row">
+                                            <div class="col-xs-9">
+                                                <a class="oe_kanban_stock_picking_type_list" name="776" type="action">
+                                                    To Apply
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <field name="nb_validation"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><div class="container o_kanban_card_manage_pane">
+                                <div class="row">
+                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                        <div class="o_kanban_card_manage_title">
+                                            <span>View</span>
+                                        </div>
+                                        <div>
+                                            <a name="773" type="action">All</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_new">
+                                        <div class="o_kanban_card_manage_title">
+                                            <span>New</span>
+                                        </div>
+                                        <div>
+                                            <a name="772" type="action">ECO</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                    <div class="col-xs-8">
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                    <div class="col-xs-4 text-right">
+                                        <a type="edit">Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
